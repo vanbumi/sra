@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.6.26, for osx10.8 (x86_64)
+-- MySQL dump 10.13  Distrib 5.5.44, for debian-linux-gnu (i686)
 --
--- Host: localhost    Database: rubysauce_development
+-- Host: localhost    Database: sra_dev
 -- ------------------------------------------------------
--- Server version	5.6.26
+-- Server version	5.5.44-0ubuntu0.14.04.1
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -24,12 +24,12 @@ DROP TABLE IF EXISTS `article_categories`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `article_categories` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `article_id` int(11) DEFAULT NULL,
-  `category_id` int(11) DEFAULT NULL,
+  `article_id` bigint(20) DEFAULT NULL,
+  `category_id` bigint(20) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,19 +43,19 @@ CREATE TABLE `articles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `body` text COLLATE utf8_unicode_ci,
-  `author_id` int(11) DEFAULT NULL,
+  `author_id` bigint(20) DEFAULT NULL,
   `permalink` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `excerp` text COLLATE utf8_unicode_ci,
   `feat_img` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `comment_status` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'yes or no',
-  `publish_status` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'draft or publish',
-  `publish_visibility` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'public or private',
-  `article_type` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'article or page',
-  `article_vcount` int(11) DEFAULT NULL COMMENT 'article view count',
+  `comment_status` varchar(3) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `publish_status` varchar(20) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `publish_visibility` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `article_type` varchar(10) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `article_vcount` bigint(20) DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -74,7 +74,7 @@ CREATE TABLE `categories` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -111,12 +111,12 @@ CREATE TABLE `media` (
   `med_caption` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `med_alt` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `med_description` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `med_author_id` int(11) DEFAULT NULL,
-  `gallery` int(11) DEFAULT NULL COMMENT 'Pilihan yes atau no',
+  `med_author_id` bigint(20) DEFAULT NULL,
+  `gallery` bigint(20) DEFAULT NULL,
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -129,7 +129,7 @@ DROP TABLE IF EXISTS `options`;
 CREATE TABLE `options` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `option_key` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `option_value` text COLLATE utf8_unicode_ci,
+  `option_value` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
@@ -163,7 +163,7 @@ CREATE TABLE `themes` (
   `created_at` datetime NOT NULL,
   `updated_at` datetime NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -179,6 +179,7 @@ CREATE TABLE `users` (
   `encrypted_password` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `full_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `nick_name` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `avatar_file` varchar(255) COLLATE utf8_unicode_ci DEFAULT 'avatar-no.png',
   `level` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `reset_password_token` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
   `reset_password_sent_at` datetime DEFAULT NULL,
@@ -192,132 +193,136 @@ CREATE TABLE `users` (
   `confirmed_at` datetime DEFAULT NULL,
   `confirmation_sent_at` datetime DEFAULT NULL,
   `unconfirmed_email` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  `avatar_file` varchar(255) COLLATE utf8_unicode_ci DEFAULT '',
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_users_on_email` (`email`),
   UNIQUE KEY `index_users_on_reset_password_token` (`reset_password_token`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Temporary view structure for view `v_article_categories`
+-- Temporary table structure for view `v_article_categories`
 --
 
 DROP TABLE IF EXISTS `v_article_categories`;
 /*!50001 DROP VIEW IF EXISTS `v_article_categories`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `v_article_categories` AS SELECT 
- 1 AS `id`,
- 1 AS `article_id`,
- 1 AS `title`,
- 1 AS `body`,
- 1 AS `author_id`,
- 1 AS `full_name`,
- 1 AS `nick_name`,
- 1 AS `permalink`,
- 1 AS `excerp`,
- 1 AS `feat_img`,
- 1 AS `comment_status`,
- 1 AS `publish_status`,
- 1 AS `publish_visibility`,
- 1 AS `article_vcount`,
- 1 AS `created_at`,
- 1 AS `updated_at`,
- 1 AS `category_id`,
- 1 AS `cat_name`,
- 1 AS `cat_slug`,
- 1 AS `cat_count`,
- 1 AS `article_all`*/;
+/*!50001 CREATE TABLE `v_article_categories` (
+  `id` tinyint NOT NULL,
+  `article_id` tinyint NOT NULL,
+  `title` tinyint NOT NULL,
+  `body` tinyint NOT NULL,
+  `author_id` tinyint NOT NULL,
+  `full_name` tinyint NOT NULL,
+  `nick_name` tinyint NOT NULL,
+  `permalink` tinyint NOT NULL,
+  `excerp` tinyint NOT NULL,
+  `feat_img` tinyint NOT NULL,
+  `comment_status` tinyint NOT NULL,
+  `publish_status` tinyint NOT NULL,
+  `publish_visibility` tinyint NOT NULL,
+  `article_vcount` tinyint NOT NULL,
+  `created_at` tinyint NOT NULL,
+  `updated_at` tinyint NOT NULL,
+  `category_id` tinyint NOT NULL,
+  `cat_name` tinyint NOT NULL,
+  `cat_slug` tinyint NOT NULL,
+  `cat_count` tinyint NOT NULL,
+  `article_all` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary view structure for view `v_articles`
+-- Temporary table structure for view `v_articles`
 --
 
 DROP TABLE IF EXISTS `v_articles`;
 /*!50001 DROP VIEW IF EXISTS `v_articles`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `v_articles` AS SELECT 
- 1 AS `id`,
- 1 AS `title`,
- 1 AS `body`,
- 1 AS `author_id`,
- 1 AS `full_name`,
- 1 AS `nick_name`,
- 1 AS `permalink`,
- 1 AS `excerp`,
- 1 AS `feat_img`,
- 1 AS `comment_status`,
- 1 AS `publish_status`,
- 1 AS `publish_visibility`,
- 1 AS `article_type`,
- 1 AS `article_vcount`,
- 1 AS `article_all`,
- 1 AS `created_at`,
- 1 AS `updated_at`*/;
+/*!50001 CREATE TABLE `v_articles` (
+  `id` tinyint NOT NULL,
+  `title` tinyint NOT NULL,
+  `body` tinyint NOT NULL,
+  `author_id` tinyint NOT NULL,
+  `full_name` tinyint NOT NULL,
+  `nick_name` tinyint NOT NULL,
+  `permalink` tinyint NOT NULL,
+  `excerp` tinyint NOT NULL,
+  `feat_img` tinyint NOT NULL,
+  `comment_status` tinyint NOT NULL,
+  `publish_status` tinyint NOT NULL,
+  `publish_visibility` tinyint NOT NULL,
+  `article_type` tinyint NOT NULL,
+  `article_vcount` tinyint NOT NULL,
+  `article_all` tinyint NOT NULL,
+  `created_at` tinyint NOT NULL,
+  `updated_at` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary view structure for view `v_discusses`
+-- Temporary table structure for view `v_discusses`
 --
 
 DROP TABLE IF EXISTS `v_discusses`;
 /*!50001 DROP VIEW IF EXISTS `v_discusses`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `v_discusses` AS SELECT 
- 1 AS `id`,
- 1 AS `article_id`,
- 1 AS `title`,
- 1 AS `permalink`,
- 1 AS `excerp`,
- 1 AS `feat_img`,
- 1 AS `comment_status`,
- 1 AS `user_id`,
- 1 AS `email`,
- 1 AS `full_name`,
- 1 AS `nick_name`,
- 1 AS `level`,
- 1 AS `dis_body`,
- 1 AS `dis_approve`,
- 1 AS `created_at`,
- 1 AS `updated_at`*/;
+/*!50001 CREATE TABLE `v_discusses` (
+  `id` tinyint NOT NULL,
+  `article_id` tinyint NOT NULL,
+  `title` tinyint NOT NULL,
+  `permalink` tinyint NOT NULL,
+  `excerp` tinyint NOT NULL,
+  `feat_img` tinyint NOT NULL,
+  `comment_status` tinyint NOT NULL,
+  `user_id` tinyint NOT NULL,
+  `email` tinyint NOT NULL,
+  `full_name` tinyint NOT NULL,
+  `nick_name` tinyint NOT NULL,
+  `level` tinyint NOT NULL,
+  `dis_body` tinyint NOT NULL,
+  `dis_approve` tinyint NOT NULL,
+  `created_at` tinyint NOT NULL,
+  `updated_at` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
--- Temporary view structure for view `v_pages`
+-- Temporary table structure for view `v_pages`
 --
 
 DROP TABLE IF EXISTS `v_pages`;
 /*!50001 DROP VIEW IF EXISTS `v_pages`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `v_pages` AS SELECT 
- 1 AS `id`,
- 1 AS `title`,
- 1 AS `body`,
- 1 AS `author_id`,
- 1 AS `full_name`,
- 1 AS `nick_name`,
- 1 AS `permalink`,
- 1 AS `excerp`,
- 1 AS `feat_img`,
- 1 AS `comment_status`,
- 1 AS `publish_status`,
- 1 AS `publish_visibility`,
- 1 AS `article_type`,
- 1 AS `created_at`,
- 1 AS `updated_at`*/;
+/*!50001 CREATE TABLE `v_pages` (
+  `id` tinyint NOT NULL,
+  `title` tinyint NOT NULL,
+  `body` tinyint NOT NULL,
+  `author_id` tinyint NOT NULL,
+  `full_name` tinyint NOT NULL,
+  `nick_name` tinyint NOT NULL,
+  `permalink` tinyint NOT NULL,
+  `excerp` tinyint NOT NULL,
+  `feat_img` tinyint NOT NULL,
+  `comment_status` tinyint NOT NULL,
+  `publish_status` tinyint NOT NULL,
+  `publish_visibility` tinyint NOT NULL,
+  `article_type` tinyint NOT NULL,
+  `created_at` tinyint NOT NULL,
+  `updated_at` tinyint NOT NULL
+) ENGINE=MyISAM */;
 SET character_set_client = @saved_cs_client;
 
 --
 -- Final view structure for view `v_article_categories`
 --
 
+/*!50001 DROP TABLE IF EXISTS `v_article_categories`*/;
 /*!50001 DROP VIEW IF EXISTS `v_article_categories`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -326,7 +331,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root_dev`@`localhost` SQL SECURITY DEFINER */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_article_categories` AS select `article_categories`.`id` AS `id`,`article_categories`.`article_id` AS `article_id`,`articles`.`title` AS `title`,`articles`.`body` AS `body`,`articles`.`author_id` AS `author_id`,(select `users`.`full_name` from `users` where (`users`.`id` = `articles`.`author_id`)) AS `full_name`,(select `users`.`nick_name` from `users` where (`users`.`id` = `articles`.`author_id`)) AS `nick_name`,`articles`.`permalink` AS `permalink`,`articles`.`excerp` AS `excerp`,`articles`.`feat_img` AS `feat_img`,`articles`.`comment_status` AS `comment_status`,`articles`.`publish_status` AS `publish_status`,`articles`.`publish_visibility` AS `publish_visibility`,`articles`.`article_vcount` AS `article_vcount`,`articles`.`created_at` AS `created_at`,`articles`.`updated_at` AS `updated_at`,`article_categories`.`category_id` AS `category_id`,`categories`.`cat_name` AS `cat_name`,`categories`.`cat_slug` AS `cat_slug`,`categories`.`cat_count` AS `cat_count`,concat(`articles`.`title`,' ',`articles`.`body`,' ',`articles`.`permalink`,' ',`articles`.`excerp`,' ',`categories`.`cat_name`) AS `article_all` from ((`article_categories` left join `categories` on((`article_categories`.`category_id` = `categories`.`id`))) left join `articles` on((`article_categories`.`article_id` = `articles`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -336,6 +341,7 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `v_articles`
 --
 
+/*!50001 DROP TABLE IF EXISTS `v_articles`*/;
 /*!50001 DROP VIEW IF EXISTS `v_articles`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -344,7 +350,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root_dev`@`localhost` SQL SECURITY DEFINER */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_articles` AS select `articles`.`id` AS `id`,`articles`.`title` AS `title`,`articles`.`body` AS `body`,`articles`.`author_id` AS `author_id`,`users`.`full_name` AS `full_name`,`users`.`nick_name` AS `nick_name`,`articles`.`permalink` AS `permalink`,`articles`.`excerp` AS `excerp`,`articles`.`feat_img` AS `feat_img`,`articles`.`comment_status` AS `comment_status`,`articles`.`publish_status` AS `publish_status`,`articles`.`publish_visibility` AS `publish_visibility`,`articles`.`article_type` AS `article_type`,`articles`.`article_vcount` AS `article_vcount`,concat(`articles`.`title`,' ',`articles`.`body`,' ',`articles`.`permalink`,' ',`articles`.`excerp`) AS `article_all`,`articles`.`created_at` AS `created_at`,`articles`.`updated_at` AS `updated_at` from (`articles` left join `users` on((`articles`.`author_id` = `users`.`id`))) where (`articles`.`article_type` = 'Article') */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -354,6 +360,7 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `v_discusses`
 --
 
+/*!50001 DROP TABLE IF EXISTS `v_discusses`*/;
 /*!50001 DROP VIEW IF EXISTS `v_discusses`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -362,7 +369,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root_dev`@`localhost` SQL SECURITY DEFINER */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_discusses` AS select `discusses`.`id` AS `id`,`discusses`.`article_id` AS `article_id`,`articles`.`title` AS `title`,`articles`.`permalink` AS `permalink`,`articles`.`excerp` AS `excerp`,`articles`.`feat_img` AS `feat_img`,`articles`.`comment_status` AS `comment_status`,`discusses`.`user_id` AS `user_id`,`users`.`email` AS `email`,`users`.`full_name` AS `full_name`,`users`.`nick_name` AS `nick_name`,`users`.`level` AS `level`,`discusses`.`dis_body` AS `dis_body`,`discusses`.`dis_approve` AS `dis_approve`,`discusses`.`created_at` AS `created_at`,`discusses`.`updated_at` AS `updated_at` from ((`discusses` left join `users` on((`discusses`.`user_id` = `users`.`id`))) left join `articles` on((`discusses`.`article_id` = `articles`.`id`))) */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -372,6 +379,7 @@ SET character_set_client = @saved_cs_client;
 -- Final view structure for view `v_pages`
 --
 
+/*!50001 DROP TABLE IF EXISTS `v_pages`*/;
 /*!50001 DROP VIEW IF EXISTS `v_pages`*/;
 /*!50001 SET @saved_cs_client          = @@character_set_client */;
 /*!50001 SET @saved_cs_results         = @@character_set_results */;
@@ -380,7 +388,7 @@ SET character_set_client = @saved_cs_client;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root_dev`@`localhost` SQL SECURITY DEFINER */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
 /*!50001 VIEW `v_pages` AS select `articles`.`id` AS `id`,`articles`.`title` AS `title`,`articles`.`body` AS `body`,`articles`.`author_id` AS `author_id`,`users`.`full_name` AS `full_name`,`users`.`nick_name` AS `nick_name`,`articles`.`permalink` AS `permalink`,`articles`.`excerp` AS `excerp`,`articles`.`feat_img` AS `feat_img`,`articles`.`comment_status` AS `comment_status`,`articles`.`publish_status` AS `publish_status`,`articles`.`publish_visibility` AS `publish_visibility`,`articles`.`article_type` AS `article_type`,`articles`.`created_at` AS `created_at`,`articles`.`updated_at` AS `updated_at` from (`articles` left join `users` on((`articles`.`author_id` = `users`.`id`))) where (`articles`.`article_type` = 'Page') */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -395,7 +403,7 @@ SET character_set_client = @saved_cs_client;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-29 22:58:18
+-- Dump completed on 2015-11-19 19:28:11
 INSERT INTO schema_migrations (version) VALUES ('20141230104903');
 
 INSERT INTO schema_migrations (version) VALUES ('20141230120303');
