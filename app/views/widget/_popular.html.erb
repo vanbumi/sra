@@ -1,0 +1,17 @@
+<% @larts = VArticle.where('publish_status = "Publish" and publish_visibility =
+"Public"').order('article_vcount DESC').take(5) %>
+
+<div id="widget_popular_article">
+	<h3>Popular</h3>
+	<div>
+		<% @larts.each do |lar| %>
+		<li>
+			<a href="/<%= lar.permalink %>">
+				<%= lar.title %>
+			</a>
+			<br>
+			<small><%= lar.created_at %></small>
+		</li>
+		<% end %>
+	</div>
+</div>

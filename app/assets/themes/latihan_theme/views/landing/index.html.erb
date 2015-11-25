@@ -1,0 +1,27 @@
+<%= render partial: 'widget/nav' %>
+
+	<div id="the-content">
+		<div id="left-content">
+			<% @articles.each do |article| %>
+			<div>
+				<a href="/<%= article.permalink %>">
+				<h1><%= article.title %></h1>
+				</a>
+				<article>
+					<%= strip_tags(article.body)[0..400].html_safe %>
+					<a href="/<%= article.permalink %>">[Read more ...]</a>
+				</article>
+				<hr>
+			</div>
+			<% end %>
+		</div>
+		<div id="right-content">
+			<!-- widget disini -->
+			<%= render partial: 'widget/form_search' %>
+			<%= render partial: 'widget/popular' %>
+		</div>
+	</div>
+	
+	<div id="footer">
+		<%= render partial: 'widget/footer' %>
+	</div>	

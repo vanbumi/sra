@@ -20,7 +20,7 @@ class LandingController < ApplicationController
     end
 
     @dynamic_title = "Home" # find something better to change this
-    @dynamic_author = "nitzaalfinas" # change this if you want
+    @dynamic_author = "dyo medio" # change this if you want
     @dynamic_description = app_set('site_description')
     @dynamic_keywords = app_set('site_keywords')
     @dynamic_image = "logo.png"

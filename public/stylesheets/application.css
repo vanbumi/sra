@@ -1,0 +1,31 @@
+#nav-bar {
+background-color: black;
+color: #fff;
+padding: 20px;
+}
+#nav-bar li {
+display: inline;
+list-style: none;
+}
+#nav-bar a {
+color: #fff;
+}
+#the-content {
+display: table;
+width: 100%;
+}
+#left-content {
+width: 75%;
+float: left;
+}
+#right-content {
+width: 25%;
+float: left;
+}
+#footer {
+background-color: black;
+color: #fff;
+display: table;
+padding: 20px;
+width: 100%;
+}

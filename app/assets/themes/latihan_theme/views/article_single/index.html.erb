@@ -1,0 +1,8 @@
+<%= render partial: 'widget/nav' %>
+
+<div>
+	<h1><%= @article.title %></h1>
+	<article>
+		<%= @article.body.html_safe %>
+	</article>
+</div>
