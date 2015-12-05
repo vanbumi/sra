@@ -8,6 +8,9 @@
 
   <link rel='icon' href='<%= image_url "logo.png" %>' type='image/jpg'>
 
+  <!-- lp theme -->
+  <%= render 'shared/landingp' %>
+
   <!-- global -->
   <meta name="author" content="<%= @dynamic_author %>" />
 
@@ -31,6 +34,8 @@
   <meta name="twitter:description" content="<%= @dynamic_description %>" />
   <meta name="twitter:image" content="<%= image_url @dynamic_image %>" />
   <meta name="twitter:domain" content="<%= app_set('site_domain') %>" />
+
+
 
   
   <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

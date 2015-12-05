@@ -17,6 +17,7 @@
 
 # Ignore database configuration
 config/database.yml
+config/secrets.yml
 
 catatan_pengembangan.txt
 /nbproject

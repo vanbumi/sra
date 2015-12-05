@@ -28,7 +28,7 @@
       <div id="adm_sidemenu" class="col-lg-2 pl0 pr0">
         <nav class="navbar" style="border: transparent;">
           <div class="navbar-header w100">
-            <a class="navbar-brand w100 text-center" href="/">Ruby Sauce</a>
+            <a class="navbar-brand w100 text-center" href="/">SRA Admin Panel</a>
           </div>
         </nav>
         
@@ -73,11 +73,7 @@
             </li>
           <% end %>
             
-          <% if current_user.level == "Admin" %>
-            <li role="presentation" id="pill_themes">
-              <%= link_to(raw("<i class='glyphicon glyphicon-heart'></i>&nbsp;&nbsp;Themes"), adm_themes_path) %>
-            </li>
-          <% end %>
+          <!-- menu themes di disable -->
 
           <% if current_user.level == "Admin" %>
             <li role="presentation" id="pill_users">

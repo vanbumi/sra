@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
 
+  get 'home/index'
+
   devise_for :users
 
 	#---------------------------
-	root  "landing#index"
+	# root  "landing#index"
+  root  "home#index"
 
   get 'search', to: 'search#index'
   
